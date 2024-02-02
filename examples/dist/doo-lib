@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+function save-secret {
+read -sp "Enter secret: " SECRET
+[ -z "$SECRET" ] &&
+    echo No input provided
+}
+function core.debug {
+case "$1" in \? | -h | --help)
+cat <<EOF
+usage: ${0##*\/} core debug [options]
+options:
+  \$1                 value to print
+EOF
+return 1
+;;
+esac
+echo "### debug ### $1"
+}
+function greet {
+case "$1" in \? | -h | --help)
+cat <<EOF
+usage: ${0##*\/} greet [options]
+options:
+  \$1                 name to greet
+EOF
+return 1
+;;
+esac
+echo Hello "${1:-World}"
+}

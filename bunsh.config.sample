@@ -1,0 +1,22 @@
+### bundle options
+# source directory
+# b.src=src         # default
+
+# output directory
+# b.out=out         # default
+
+# bundled file name
+# b.name=bundled    # default
+
+### script options
+# bundled file version - not applicable with s.libonly
+# s.version=1.0.0
+
+# bundle as library only (for sourcing)
+# s.libonly=true
+
+# includes an error message if no args are provided to any command - not applicable with s.libonly
+# s.err_noargs=true
+
+# includes an error message if an unimplemented arg is provided to any command - not applicable with s.libonly
+# s.err_illegalopt=true

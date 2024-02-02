@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+function save-secret {
+read -sp "Enter secret: " SECRET
+[ -z "$SECRET" ] &&
+    echo No input provided
+}
+function core.debug {
+case "$1" in \? | -h | --help)
+cat <<EOF
+usage: ${0##*\/} core debug [options]
+options:
+  \$1                 value to print
+EOF
+exit 1
+;;
+esac
+echo "### debug ### $1"
+}
+function greet {
+case "$1" in \? | -h | --help)
+cat <<EOF
+usage: ${0##*\/} greet [options]
+options:
+  \$1                 name to greet
+EOF
+exit 1
+;;
+esac
+echo Hello "${1:-World}"
+}
+core() {
+while (($# > 0)); do
+case "$1" in
+\? | -h | --help)
+cat <<EOF
+usage: ${0##*\/} core [options]
+options:
+  debug               -
+  -h,--help           print this help message
+EOF
+exit 1
+;;
+debug) shift && core.debug "$@"; exit $? ;;
+esac
+shift
+done
+}
+VERSION="1.0.0-rc.1"
+while (($# > 0)); do
+case "$1" in
+\? | -h | --help)
+cat <<EOF
+usage: ${0##*\/} [options]
+options:
+  core                {debug}
+  greet               -
+  -v,--version        print the current version of this executable
+  -h,--help           print this help message
+EOF
+exit 1
+;;
+-v | --version)
+echo "$VERSION"
+exit 1
+;;
+core) shift && core "$@"; exit $?;;
+greet) shift && greet "$@"; exit $?;;
+esac
+shift
+done
+exit 0

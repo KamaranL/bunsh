@@ -1,0 +1,3 @@
+#!/bin/bash
+#@param     $1=value to print
+echo "### debug ### $1"
