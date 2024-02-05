@@ -85,7 +85,7 @@ $ bunsh -s src -o dist -n doo-lib --opt s.libonly=true
 # [ 2024-02-01 06:27:14 ] doo-lib (v1.0.0-rc.1) => /Users/kamaranl/Git/bunsh/examples/dist/doo-lib
 ```
 
-Since this is a library, it won't be executable, but we can (dot) source it in other scripts, our `.bash_profile`, or even the terminal:
+Since this is a library-only bundle[^1], it won't be executable, but we can (dot) source it in other scripts, our `.bash_profile`, or even the terminal:
 
 ```bash
 $ . /Users/kamaranl/Git/bunsh/examples/dist/doo-lib
@@ -96,3 +96,5 @@ $ greet Kam
 $ core.debug "another debug message"
 ### debug ### another debug message
 ```
+
+[^1]: When using the `s.libonly` opt, be sure to *either* prefix variable declarations with [`local`](https://www.gnu.org/software/bash/manual/bash.html#index-local), or [`unset`](https://www.gnu.org/software/bash/manual/bash.html#index-unset) the variables declared prior to exit/return to prevent unintentional reassignment of globally declared variables- unless you are intentionally reassigning global variables of course.
