@@ -1,3 +1,20 @@
 #!/bin/bash
-#@param     $1=name to greet
-echo Hello "${1:-World}"
+# @desc     prints a greeting to the console
+# @param    -u,--upper=convert the entire greeting to uppercase
+# @param    -l,--lower=convert the entire greeting to lowercase
+# @arg      <name>
+default=World
+if [[ $1 =~ ^-u|--upper$ ]]; then
+    shift
+    name="${1:-$default}"
+    echo Hello "$name" | tr '[[:lower:]]' '[[:upper:]]'
+elif [[ $1 =~ ^-l|--lower$ ]]; then
+    shift
+    name="${1:-$default}"
+    echo Hello "$name" | tr '[[:upper:]]' '[[:lower:]]'
+else
+    echo Hello "${1:-$default}"
+fi
+
+unset default name
+exit 0

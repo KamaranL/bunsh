@@ -9,11 +9,14 @@
 
 > bundle your shell scripts into a single executable script or library
 
+[![latest release](https://badgen.net/github/release/KamaranL/bunsh?icon=github)](https://github.com/KamaranL/bunsh/releases/latest)
+
 - [Configuration](#configuration)
 - [Installation and Usage](#installation-and-usage)
   - [Dependencies](#dependencies)
   - [Install](#install)
   - [Usage](#usage)
+    - [Decorators](#decorators)
 - [Examples](#examples)
 
 ## Configuration
@@ -91,12 +94,22 @@ options:
   -v,--version        print version
 ```
 
+#### Decorators
+
+bunsh uses pre-defined decorators[^3] to generate the help messages for each function:
+
+| Name     | Purpose                                                                                                                                                 |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@desc`  | provides a brief description of the function when viewed from a parent help menu - each `@desc` line will be read altogether (as one whole description) |
+| `@param` | defines the named parameters, or options, that are available to the function - each `@param` line will be read individually                             |
+| `@arg`   | defines the positional parameters, or args, that are available to the function - each `@arg` line will be read individually                             |
+
 ## Examples
 
 See [examples](/examples/README.md#examples)
 
-<!-- footnotes -->
-
 [^1]: Most, if not all, of the listed dependencies come pre-installed on MacOS and a good number of Linux distributions- provided for transparency.
 
 [^2]: Everyone has doubts, see [my wiki page](https://github.com/KamaranL/KamaranL/wiki#validation) on validation if you're like everyone.
+
+[^3]: Take a look at [this file](/examples/src/public/greet) to see how decorators can be used.

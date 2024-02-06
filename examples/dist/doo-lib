@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# bundled with bunsh - https://github.com/KamaranL/bunsh
 function save-secret {
 read -sp "Enter secret: " SECRET
 [ -z "$SECRET" ] &&
@@ -7,11 +8,9 @@ read -sp "Enter secret: " SECRET
 function core.debug {
 case "$1" in \? | -h | --help)
 cat <<EOF
-usage: ${0##*\/} core debug [options]
-options:
-  \$1                 value to print
+usage: core debug <message>
 EOF
-return 1
+return 0
 ;;
 esac
 echo "### debug ### $1"
@@ -19,12 +18,26 @@ echo "### debug ### $1"
 function greet {
 case "$1" in \? | -h | --help)
 cat <<EOF
-usage: ${0##*\/} greet [options]
+usage: greet [options] <name>
 options:
-  \$1                 name to greet
+  -u,--upper          convert the entire greeting to uppercase
+  -l,--lower          convert the entire greeting to lowercase
 EOF
-return 1
+return 0
 ;;
 esac
-echo Hello "${1:-World}"
+default=World
+if [[ $1 =~ ^-u|--upper$ ]]; then
+    shift
+    name="${1:-$default}"
+    echo Hello "$name" | tr '[[:lower:]]' '[[:upper:]]'
+elif [[ $1 =~ ^-l|--lower$ ]]; then
+    shift
+    name="${1:-$default}"
+    echo Hello "$name" | tr '[[:upper:]]' '[[:lower:]]'
+else
+    echo Hello "${1:-$default}"
+fi
+unset default name
+return 0
 }

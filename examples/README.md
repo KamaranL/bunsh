@@ -57,9 +57,7 @@ $ doo core ? # '?' will return the same result as -h,--help, if help is availabl
 #   --help,-h           print this help message
 
 $ doo core debug ?
-# usage: doo core debug [options]
-# options:
-#   $1                 value to print
+# usage: doo core debug <message>
 
 $ doo core debug "this is your debug message"
 # ### debug ### this is your debug message
@@ -90,11 +88,21 @@ Since this is a library-only bundle[^1], it won't be executable, but we can (dot
 ```bash
 $ . /Users/kamaranl/Git/bunsh/examples/dist/doo-lib
 
+$ greet ?
+# usage: greet [options] <name>
+# options:
+#   -u,--upper          convert the entire greeting to uppercase
+#   -l,--lower          convert the entire greeting to lowercase
+
 $ greet Kam
 # Hello Kam
+
+$ greet -u Kam && greet -l Kam
+# HELLO KAM
+# hello kam
 
 $ core.debug "another debug message"
 ### debug ### another debug message
 ```
 
-[^1]: When using the `s.libonly` opt, be sure to *either* prefix variable declarations with [`local`](https://www.gnu.org/software/bash/manual/bash.html#index-local), or [`unset`](https://www.gnu.org/software/bash/manual/bash.html#index-unset) the variables declared prior to exit/return to prevent unintentional reassignment of globally declared variables- unless you are intentionally reassigning global variables of course.
+[^1]: When using the `s.libonly` opt, be sure to *either* prefix variable declarations with [`local`](https://www.gnu.org/software/bash/manual/bash.html#index-local), or [`unset`](https://www.gnu.org/software/bash/manual/bash.html#index-unset) the variables declared prior to exit/return to prevent unintentional reassignment of globally declared variables- unless your intentions are to do just that.
