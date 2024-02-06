@@ -112,4 +112,4 @@ See [examples](/examples/README.md#examples)
 
 [^2]: Everyone has doubts, see [my wiki page](https://github.com/KamaranL/KamaranL/wiki#validation) on validation if you're like everyone.
 
-[^3]: Take a look at [this file](/KamaranL/bunsh/blob/main/examples/src/public/greet) to see how decorators can be used.
+[^3]: Take a look at [this file](https://github.com/KamaranL/bunsh/blob/main/examples/src/public/greet) to see how decorators can be used.
