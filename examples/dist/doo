@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# bundled with bunsh - https://github.com/KamaranL/bunsh
 function save-secret {
 read -sp "Enter secret: " SECRET
 [ -z "$SECRET" ] &&
@@ -7,11 +8,9 @@ read -sp "Enter secret: " SECRET
 function core.debug {
 case "$1" in \? | -h | --help)
 cat <<EOF
-usage: ${0##*\/} core debug [options]
-options:
-  \$1                 value to print
+usage: ${0##*\/} core debug <message>
 EOF
-exit 1
+exit 0
 ;;
 esac
 echo "### debug ### $1"
@@ -19,14 +18,28 @@ echo "### debug ### $1"
 function greet {
 case "$1" in \? | -h | --help)
 cat <<EOF
-usage: ${0##*\/} greet [options]
+usage: ${0##*\/} greet [options] <name>
 options:
-  \$1                 name to greet
+  -u,--upper          convert the entire greeting to uppercase
+  -l,--lower          convert the entire greeting to lowercase
 EOF
-exit 1
+exit 0
 ;;
 esac
-echo Hello "${1:-World}"
+default=World
+if [[ $1 =~ ^-u|--upper$ ]]; then
+    shift
+    name="${1:-$default}"
+    echo Hello "$name" | tr '[[:lower:]]' '[[:upper:]]'
+elif [[ $1 =~ ^-l|--lower$ ]]; then
+    shift
+    name="${1:-$default}"
+    echo Hello "$name" | tr '[[:upper:]]' '[[:lower:]]'
+else
+    echo Hello "${1:-$default}"
+fi
+unset default name
+exit 0
 }
 core() {
 (($# == 0)) && {
@@ -43,7 +56,7 @@ options:
   debug               -
   -h,--help           print this help message
 EOF
-exit 1
+exit 0
 ;;
 debug) shift && core.debug "$@"; exit $? ;;
 *) echo illegal option: "'$1'" && exit 1 ;;
@@ -56,7 +69,7 @@ echo no arguments provided
 echo print help with "${0##*\/}" --help
 exit 1
 }
-VERSION="1.1.0"
+__VERSION__="1.1.0"
 while (($# > 0)); do
 case "$1" in
 \? | -h | --help)
@@ -64,15 +77,15 @@ cat <<EOF
 usage: ${0##*\/} [options]
 options:
   core                {debug}
-  greet               -
+  greet               prints a greeting to the console
   -v,--version        print the current version of this executable
   -h,--help           print this help message
 EOF
-exit 1
+exit 0
 ;;
 -v | --version)
-echo "$VERSION"
-exit 1
+echo "$__VERSION__"
+exit 0
 ;;
 core) shift && core "$@"; exit $?;;
 greet) shift && greet "$@"; exit $?;;
