@@ -36,5 +36,7 @@ Thumbs.db:encryptable
 [Dd]esktop.ini
 __test__/
 bunsh.sh
+dist/
 ehthumbs.db
 ehthumbs_vista.db
+localbuild.sh

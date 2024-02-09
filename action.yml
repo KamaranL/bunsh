@@ -1,0 +1,40 @@
+name: 'bunsh-setup'
+description: 'installs bunsh for use in the current workflow job'
+author: 'Kamaran Layne'
+branding:
+  icon: 'command'
+  color: 'gray-dark'
+inputs:
+  version:
+    description: |
+      Version to install.
+      Default: 'latest'
+    default: latest
+    required: false
+runs:
+  using: composite
+  steps:
+    - run: mkdir -p "$RUNNER_TEMP/$GITHUB_ACTION_REPOSITORY"
+      shell: bash
+    - run: |
+        # check if version if valid and available
+        [ "$VERSION" == latest ] &&
+            VERSION="$(curl -s \
+                "https://raw.githubusercontent.com/$GITHUB_ACTION_REPOSITORY/main/VERSION.txt")"
+        RELEASE_URL="https://github.com/$GITHUB_ACTION_REPOSITORY/releases/download/v$VERSION/gha-v$VERSION.tgz"
+        STATUS_CODE="$(curl -sI -o /dev/null -w "%{http_code}" "$RELEASE_URL")" && {
+            ((STATUS_CODE != 200)) &&
+                echo "::error::($STATUS_CODE) Specified version unavailable: v$VERSION"
+            exit 1
+        } || {
+            echo "::error::(1) Unreachable: $RELEASE_URL"
+            exit 1
+        }
+        # download and install
+        curl -s "$RELEASE_URL" | tar -xz -C .
+        chmod +x "${GITHUB_ACTION_REPOSITORY##*\/}"
+        echo "$PWD" >>"$GITHUB_PATH"
+      shell: bash
+      working-directory: ${{ runner.temp }}/${{ github.actions_repository }}
+      env:
+        VERSION: ${{ inputs.version }}
