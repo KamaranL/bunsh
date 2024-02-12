@@ -9,7 +9,7 @@
 
 > bundle your shell scripts into a single executable script or library
 
-[![latest release](https://badgen.net/github/release/KamaranL/bunsh?icon=github)](https://github.com/KamaranL/bunsh/releases/latest)
+[![latest release](https://badgen.net/github/release/KamaranL/bunsh?icon=github&cache=3600)](https://github.com/KamaranL/bunsh/releases/latest)
 
 - [Configuration](#configuration)
 - [Installation and Usage](#installation-and-usage)
