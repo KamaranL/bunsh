@@ -14,27 +14,29 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: mkdir -p "$RUNNER_TEMP/$GITHUB_ACTION_REPOSITORY"
-      shell: bash
     - run: |
-        # check if version if valid and available
-        [ "$VERSION" == latest ] &&
-            VERSION="$(curl -s \
-                "https://raw.githubusercontent.com/$GITHUB_ACTION_REPOSITORY/main/VERSION.txt")"
-        RELEASE_URL="https://github.com/$GITHUB_ACTION_REPOSITORY/releases/download/v$VERSION/bunsh-v$VERSION.tgz"
-        STATUS_CODE="$(curl -sI -o /dev/null -w "%{http_code}" "$RELEASE_URL")" && {
-            ((STATUS_CODE != 200)) &&
-                echo "::error::($STATUS_CODE) Specified version unavailable: v$VERSION"
-            exit 1
-        } || {
-            echo "::error::(1) Unreachable: $RELEASE_URL"
+        # setup
+        [ "$VERSION" == latest ] && {
+            VERSION="$(curl -sL "https://raw.githubusercontent.com/$ACTION_REPOSITORY/main/VERSION.txt")"
+            echo "::debug::Using latest version: $VERSION"
+        }
+        RELEASE_URL="https://github.com/$ACTION_REPOSITORY/releases/download/v$VERSION/${ACTION_REPOSITORY##*\/}-v$VERSION.tgz"
+        STATUS_CODE="$(curl -sI -o /dev/null -w "%{http_code}" -L "$RELEASE_URL")" &&
+            ((STATUS_CODE != 200)) && {
+            echo "::error::($STATUS_CODE) Specified version unavailable: v$VERSION"
             exit 1
         }
-        # download and install
-        curl -s "$RELEASE_URL" | tar -xz -C .
-        chmod +x "${GITHUB_ACTION_REPOSITORY##*\/}"
+
+        [ ! -d "$ACTION_REPOSITORY" ] && mkdir -p "$ACTION_REPOSITORY"
+        pushd "$ACTION_REPOSITORY" >/dev/null 2>&1
+        echo "::debug::Downloading packaged release: $RELEASE_URL"
+        curl -sL "$RELEASE_URL" | tar -xz -C .
+        chmod +x "${ACTION_REPOSITORY##*\/}"
+        echo "::debug::Appending to path: $PWD"
         echo "$PWD" >>"$GITHUB_PATH"
+        popd >/dev/null 2>&1
       shell: bash
-      working-directory: ${{ runner.temp }}/${{ github.actions_repository }}
+      working-directory: ${{ runner.temp }}
       env:
+        ACTION_REPOSITORY: ${{ github.action_repository }}
         VERSION: ${{ inputs.version }}

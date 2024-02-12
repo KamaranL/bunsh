@@ -15,6 +15,8 @@
 - [Installation and Usage](#installation-and-usage)
   - [Dependencies](#dependencies)
   - [Install](#install)
+    - [Local](#local)
+    - [GitHub Actions](#github-actions)
   - [Usage](#usage)
     - [Decorators](#decorators)
 - [Examples](#examples)
@@ -51,31 +53,32 @@ bunsh can be configured via command line options, config file, or a combination 
 
 ### Install
 
-1. Clone repository:
+#### Local
 
-   ```bash
-   git clone https://github.com/KamaranL/bunsh.git
-   ```
+Copy + paste the following in your terminal to download, unpack, and link the [latest release](https://github.com/KamaranL/bunsh/releases/latest):
 
-1. Navigate to the newly downloaded repo and mark the script as executable[^2]:
+  ```bash
+  NAME=bunsh VER="$(curl -sL "https://raw.githubusercontent.com/KamaranL/$NAME/main/VERSION.txt")" && {
+     DIR="/usr/local/etc/$NAME.d"
+     [ ! -d "$DIR" ] && mkdir -p "$DIR"
+     curl -L "https://github.com/KamaranL/$NAME/releases/download/v$VER/$NAME-v$VER.tgz" | tar -vxz -C "$DIR"
+     chmod +x "$DIR/$NAME"
+     [ ! -f "/usr/local/bin/$NAME" ] && ln -s "$DIR/$NAME" "/usr/local/bin/$NAME"
+     "$NAME" -v && "$NAME" -h
+  }
+  ```
 
-   ```bash
-   chmod +x bunsh
-   ```
+#### GitHub Actions
 
-1. Add to PATH <u>or</u> create a symbolic link: *(recommended)*
-
-   - Adding cloned repo to path:
-
-     ```bash
-     echo 'export PATH=$PATH:<absolute_path_to_cloned_repo>' >>~/.bash_profile
-     ```
-
-   - Creating a symbolic link:
-
-     ```bash
-     ln -s <absolute_path_to_cloned_repo>/bunsh /usr/local/bin/bunsh
-     ```
+  ```yml
+  #...
+  jobs:
+    ci:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: KamaranL/bunsh@main
+  #...
+  ```
 
 ### Usage
 
