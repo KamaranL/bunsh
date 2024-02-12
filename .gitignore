@@ -7,6 +7,7 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 *.stackdump
+*.tmp
 *~
 .AppleDB
 .AppleDesktop
@@ -37,6 +38,6 @@ Thumbs.db:encryptable
 __test__/
 bunsh.sh
 dist/
+distribute.sh
 ehthumbs.db
 ehthumbs_vista.db
-localbuild.sh
