@@ -21,7 +21,7 @@ runs:
         [ "$VERSION" == latest ] &&
             VERSION="$(curl -s \
                 "https://raw.githubusercontent.com/$GITHUB_ACTION_REPOSITORY/main/VERSION.txt")"
-        RELEASE_URL="https://github.com/$GITHUB_ACTION_REPOSITORY/releases/download/v$VERSION/bunsh-v$VERSION.tgz"
+        RELEASE_URL="https://github.com/$GITHUB_ACTION_REPOSITORY/releases/download/v$VERSION/${GITHUB_ACTION_REPOSITORY##*\/}-v$VERSION.tgz"
         STATUS_CODE="$(curl -sI -o /dev/null -w "%{http_code}" "$RELEASE_URL")" && {
             ((STATUS_CODE != 200)) &&
                 echo "::error::($STATUS_CODE) Specified version unavailable: v$VERSION"
