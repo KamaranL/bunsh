@@ -4,7 +4,6 @@
   / __ \/ / / / __ \/ ___/ __ \
  / /_/ / /_/ / / / (__  ) / / /
 /_.___/\__,_/_/ /_/____/_/ /_/
-
 ```
 
 > bundle your shell scripts into a single executable script or library
@@ -20,6 +19,7 @@
   - [Usage](#usage)
     - [Decorators](#decorators)
 - [Examples](#examples)
+- [Validity](#validity)
 
 ## Configuration
 
@@ -99,7 +99,7 @@ options:
 
 #### Decorators
 
-bunsh uses pre-defined decorators[^3] to generate the help messages for each function:
+bunsh uses pre-defined decorators[^2] to generate the help messages for each function:
 
 | Name     | Purpose                                                                                                                                                 |
 | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -111,8 +111,10 @@ bunsh uses pre-defined decorators[^3] to generate the help messages for each fun
 
 See [examples](/examples/README.md#examples)
 
+## Validity
+
+Everyone has doubts, see [my wiki page](https://github.com/KamaranL/KamaranL/wiki#validation) on validation if you're like everyone :smile:
+
 [^1]: Most, if not all, of the listed dependencies come pre-installed on MacOS and a good number of Linux distributions- provided for transparency.
 
-[^2]: Everyone has doubts, see [my wiki page](https://github.com/KamaranL/KamaranL/wiki#validation) on validation if you're like everyone.
-
-[^3]: Take a look at [this file](https://github.com/KamaranL/bunsh/blob/main/examples/src/public/greet) to see how decorators can be used.
+[^2]: Take a look at [this file](https://github.com/KamaranL/bunsh/blob/main/examples/src/public/greet) to see how decorators can be used.
